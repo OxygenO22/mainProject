@@ -1,3 +1,4 @@
+import { Button } from "../src/components/ui/button/Button";
 import { FilterValuesType, TaskType } from "./types/common"
 
 
@@ -21,7 +22,7 @@ export const Todolist = ({
           <li key={task.id}>
             <input type="checkbox" checked={task.isDone} />
             <span>{task.title}</span>
-            <button onClick={() => removeTask(task.id)}>x</button>
+            <Button onClickHandler={() => removeTask(task.id)} title={"x"} />
           </li>
         );
       })
@@ -34,13 +35,19 @@ export const Todolist = ({
       <h3>{title}</h3>
       <div>
         <input />
-        <button>+</button>
+        <Button title={"+"} />
       </div>
       <ul>{tasksElements}</ul>
       <div>
-        <button onClick={() => changeFilter("all")}>All</button>
-        <button onClick={() => changeFilter("active")}>Active</button>
-        <button onClick={() => changeFilter("completed")}>Completed</button>
+        <Button onClickHandler={() => changeFilter("all")} title={"All"} />
+        <Button
+          onClickHandler={() => changeFilter("active")}
+          title={"Active"}
+        />
+        <Button
+          onClickHandler={() => changeFilter("completed")}
+          title={"Completed"}
+        />
       </div>
     </div>
   );
