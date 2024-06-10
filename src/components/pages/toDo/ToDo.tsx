@@ -40,6 +40,18 @@ export const ToDo = () => {
 
   const changeFilter = (newFilterValue: FilterValuesType) => setFilter(newFilterValue);
 
+  const changeTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
+    const nextState: Array<TaskType> = tasks.map((t) =>
+      t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
+    );
+    setTasks(nextState);
+    /* const task: TaskType | undefined = tasks.find(t => t.id === taskId);
+    if (task) {
+      task.isDone = !task.isDone;
+      setTasks([...tasks]);
+    } */
+  };
+
   return (
     <div>
       <Todolist
@@ -48,12 +60,10 @@ export const ToDo = () => {
         removeTask={removeTask}
         title={todolistTitle}
         tasks={filteredTasksForTodolost}
+        changeTaskStatus={changeTaskStatus}
       />
       {/* Todolist({title: "What to learn", tasks: tasks}) */}
-      <div>
-        <input type="checkbox" checked={checked} onChange={handleChange} />
-        <span>Example</span>
-      </div>
+      <div></div>
     </div>
   );
 }
