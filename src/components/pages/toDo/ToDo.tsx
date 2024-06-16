@@ -4,13 +4,12 @@ import { FilterValuesType, TaskType } from '../../../types/common';
 import { v1 } from 'uuid';
 
 export const ToDo = () => {
-  const [tasks, setTasks] = useState<Array<TaskType>>([
+  const [tasks, setTasks] = useState<TaskType[]>([
     { id: v1(), title: "HTML", isDone: true },
     { id: v1(), title: "CSS", isDone: true },
     { id: v1(), title: "JS/TS", isDone: false },
     { id: v1(), title: "REACT", isDone: false },
   ]);
-  const [checked, setChecked] = useState(true);
   // local state
   const [filter, setFilter] = useState<FilterValuesType>("all");
   const todolistTitle = "What to learn";
@@ -27,9 +26,8 @@ export const ToDo = () => {
   };
 
   const removeTask = (taskId: string) => setTasks(tasks.filter((t) => t.id !== taskId));
-  const handleChange = () => setChecked(!checked);
 
-  let filteredTasksForTodolost: Array<TaskType> = tasks;
+  let filteredTasksForTodolost: TaskType[] = tasks;
 
   if (filter === "active") {
     filteredTasksForTodolost = tasks.filter((t) => !t.isDone);
@@ -41,15 +39,10 @@ export const ToDo = () => {
   const changeFilter = (newFilterValue: FilterValuesType) => setFilter(newFilterValue);
 
   const changeTaskStatus = (taskId: string, newIsDoneValue: boolean) => {
-    const nextState: Array<TaskType> = tasks.map((t) =>
+    const nextState: TaskType[] = tasks.map((t) =>
       t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
     );
     setTasks(nextState);
-    /* const task: TaskType | undefined = tasks.find(t => t.id === taskId);
-    if (task) {
-      task.isDone = !task.isDone;
-      setTasks([...tasks]);
-    } */
   };
 
   return (

@@ -42,9 +42,11 @@ export const Todolist = ({
       addTask(taskTitle);
       setTaskTitle("");
     } else {
-      setTasknputError('Title is required')
+      setTasknputError('Please fill the title')
     }
   };
+
+  const checkInputOnLeave = () => !taskTitle.trim() && setTasknputError("To add task title should be filled");
 
   const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) =>
     e.key === "Enter" && addTaksHandler();
@@ -52,7 +54,7 @@ export const Todolist = ({
   const setActiveChangeFilter = () => changeFilter("active");
   const setCompletedChangeFilter = () => changeFilter("completed");
 
-  const tasksElements: Array<JSX.Element> | JSX.Element =
+  const tasksElements: JSX.Element[] | JSX.Element =
     tasks.length !== 0 ? (
       tasks.map((task) => {
         return (
@@ -80,7 +82,8 @@ export const Todolist = ({
           value={taskTitle}
           onChange={textHandler}
           onKeyDown={keyDownAddTaskHandler}
-          className={tasknputError ? s.inputerror : ''}
+          className={tasknputError ? s.inputerror : ""}
+          onBlur={checkInputOnLeave}
         />
         <Button
           title={"+"}

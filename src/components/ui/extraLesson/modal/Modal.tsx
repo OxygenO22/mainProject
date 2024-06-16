@@ -7,11 +7,13 @@ interface ModalProps {
 }
 export const Modal = ({ children }:ModalProps) => {
     return (
+      <div className={styles.modal__wrapper}>
         <div className={styles.modal}>
             <div className={styles.modalContent}>
                 {children}
             </div>
         </div>
+      </div>
     );
 };
 
