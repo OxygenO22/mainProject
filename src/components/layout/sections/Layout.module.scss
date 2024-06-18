@@ -4,16 +4,34 @@
   justify-content: center;
   align-items: flex-start;
   width: 100%;
-  height: 100vh;
-  overflow-x: hidden;
+  height: 100%;
+  padding: 0 10px 0 10px;
 }
 
 .layout__inner {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   width: 100%;
   max-width: 1220px;
-  background: #ffffff;
-  padding: 0 10px 0 10px;
+  height: 100%;
+  background: rgba(250, 101, 1, 0.5);
+}
+
+.menu__wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 150px;
+  height: 100%;
+}
+
+.section__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  padding: 20px; 
 }

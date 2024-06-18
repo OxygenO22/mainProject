@@ -1,4 +1,8 @@
-export type TaskType = {
+export type TaskStateType = {
+    [todoListId: string] : TaskType[]
+}
+
+export type TaskType = {  
     id: string
     title: string
     isDone: boolean

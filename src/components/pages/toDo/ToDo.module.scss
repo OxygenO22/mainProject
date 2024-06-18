@@ -1,7 +1,18 @@
+.todolist {
+  background-color: cadetblue;
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 15px;
+}
+
 .isdone {
   text-decoration: line-through;
 }
 
 .inputerror {
   border: 1px solid red;
+}
+
+.list__item {
+  list-style: none;
 }

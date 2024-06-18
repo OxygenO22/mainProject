@@ -7,8 +7,12 @@ export const Layout = () => {
   return (
     <div className={s.layout__wrapper}>
       <div className={s.layout__inner}>
-        <Header />
-        <Outlet />
+        <aside className={s.menu__wrapper}>
+          <Header />
+        </aside>
+        <section className={s.section__wrapper}>
+          <Outlet />
+        </section>
       </div>
     </div>
   );

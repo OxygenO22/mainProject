@@ -5,7 +5,7 @@ import s from './Menu.module.scss'
 
 export const Menu = () => {
   return (
-    <div>
+    <div className={s.menu__wrapper}>
       {MenuData.map((data) => (
         <NavLink
           className={({ isActive }) =>
