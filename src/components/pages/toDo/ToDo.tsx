@@ -129,12 +129,12 @@ export const ToDo = () => {
         //tasks={tasks[tl.id]} // all don't filtered tasks
         tasks={tasksForTodolost} //  filtered tasks
         changeTaskStatus={changeTaskStatus}
-        removeTodoList={removeTodoList}
+        removeTodoList={removeTodoList} 
       />
     );
   })
 
   
 
-  return <div className={s.todolist}>{todoListsElements}</div>;
+  return <div className={s.todolist__wrapper}>{todoListsElements}</div>;
 }

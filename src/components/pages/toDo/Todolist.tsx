@@ -64,10 +64,8 @@ export const Todolist = ({
 
   const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) =>
     e.key === "Enter" && addTaksHandler();
-  const setAllChangeFilter = (filter: FilterValuesType) => changeTodoListFilter(filter, todolistId);
-  const setActiveChangeFilter = (filter: FilterValuesType) =>
-    changeTodoListFilter(filter, todolistId);
-  const setCompletedChangeFilter = (filter: FilterValuesType) =>
+
+  const  changeFilterTaskHandler = (filter: FilterValuesType) =>
     changeTodoListFilter(filter, todolistId);
 
   const tasksElements: JSX.Element[] | JSX.Element =
@@ -95,7 +93,7 @@ export const Todolist = ({
     );
 
   return (
-    <div className="todolist">
+    <div className={s.todolist}>
       <h3>
         {title}
         <button onClick={() => removeTodoList(todolistId)}>x</button>
@@ -120,15 +118,15 @@ export const Todolist = ({
       <ul>{tasksElements}</ul>
       <div>
         <Button
-          onClickHandler={() => setAllChangeFilter("all")}
+          onClickHandler={() => changeFilterTaskHandler("all")}
           title={"All"}
         />
         <Button
-          onClickHandler={() => setActiveChangeFilter("active")}
+          onClickHandler={() => changeFilterTaskHandler("active")}
           title={"Active"}
         />
         <Button
-          onClickHandler={() => setCompletedChangeFilter("completed")}
+          onClickHandler={() => changeFilterTaskHandler("completed")}
           title={"Completed"}
         />
       </div>
