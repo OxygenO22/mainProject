@@ -1,4 +1,5 @@
 import React from 'react'
+import s from './Button.module.scss'
 
 type ButtonPropsType = {
   title: string
@@ -8,7 +9,7 @@ type ButtonPropsType = {
 
 export const Button = ({ title, onClickHandler, disabled }: ButtonPropsType) => {
   return (
-    <button disabled={disabled} onClick={onClickHandler}>
+    <button className={s.button} disabled={disabled} onClick={onClickHandler}>
       {title}
     </button>
   );
