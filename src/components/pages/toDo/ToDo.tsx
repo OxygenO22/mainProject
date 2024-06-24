@@ -99,22 +99,22 @@ export const ToDo = () => {
   };
 
   // UI
-  /* let filteredTasksForTodolost = tasks;
+  /* let filteredTasksForTodolist = tasks;
 
     if (filter === "active") {
-      filteredTasksForTodolost = tasks.filter((t) => !t.isDone);
+      filteredTasksForTodolist = tasks.filter((t) => !t.isDone);
     }
     if (filter === "completed") {
-      filteredTasksForTodolost = tasks.filter((t) => t.isDone);
+      filteredTasksForTodolist = tasks.filter((t) => t.isDone);
     } */
 
   const todoListsElements = todoLists.map(tl => {
-    let tasksForTodolost = tasks[tl.id];
+    let tasksForTodolist = tasks[tl.id];
     if (tl.filter === "active") {
-      tasksForTodolost = tasks[tl.id].filter((t) => !t.isDone);
+      tasksForTodolist = tasks[tl.id].filter((t) => !t.isDone);
     }
     if (tl.filter === "completed") {
-      tasksForTodolost = tasks[tl.id].filter((t) => t.isDone);
+      tasksForTodolist = tasks[tl.id].filter((t) => t.isDone);
     }
 
     return (
@@ -127,7 +127,7 @@ export const ToDo = () => {
         title={tl.title}
         filter={tl.filter}
         //tasks={tasks[tl.id]} // all don't filtered tasks
-        tasks={tasksForTodolost} //  filtered tasks
+        tasks={tasksForTodolist} //  filtered tasks
         changeTaskStatus={changeTaskStatus}
         removeTodoList={removeTodoList} 
       />
