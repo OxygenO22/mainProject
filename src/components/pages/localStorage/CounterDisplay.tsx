@@ -2,13 +2,27 @@ import React from 'react'
 import s from './CounterDisplay.module.scss'
 
 type CounterDisplayPropsType = {
+  value: number;
+  maxValue: number;
+  optionValue: number;
+  optionMaxValue: number;
+  options: boolean;
+  isOptionCorrect: boolean;
+};
 
-}
-
-export const CounterDisplay = () => {
+export const CounterDisplay = ({
+  value,
+  maxValue,
+  optionValue,
+  optionMaxValue,
+  options,
+  isOptionCorrect,
+}: CounterDisplayPropsType) => {
+  const limitStyle = maxValue === value ? s.maxvalue : "";
+  const limitOptionStyle = isOptionCorrect ? s.maxvalue : "";
   return (
-    <>
-      {/* <div className={s.value__wrapper}>
+    <section className={s.display__section}>
+      <div className={s.value__wrapper}>
         <div>
           <h1>
             Value: <span>{value}</span>
@@ -16,8 +30,9 @@ export const CounterDisplay = () => {
         </div>
         {options && (
           <div>
-            <h1>
-              Option Value: <span>{optionValue}</span>
+            <h1 className={limitOptionStyle}>
+              Option Value:{" "}
+              <span className={limitOptionStyle}>{optionValue}</span>
             </h1>
           </div>
         )}
@@ -26,7 +41,7 @@ export const CounterDisplay = () => {
         <div>
           <h3>
             <span className={limitStyle}>Max value:</span>{" "}
-            <span className={limitStyle}>{maxValue.current}</span>
+            <span className={limitStyle}>{maxValue}</span>
           </h3>
         </div>
         {options && (
@@ -37,7 +52,7 @@ export const CounterDisplay = () => {
             </h3>
           </div>
         )}
-      </div> */}
-    </>
+      </div>
+    </section>
   );
-}
+};

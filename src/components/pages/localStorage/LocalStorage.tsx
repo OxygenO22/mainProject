@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Button } from '../../ui/button/Button';
 import s from './LocalStorage.module.scss'
+import { CounterDisplay } from './CounterDisplay';
+import { Progressbar } from './Progressbar';
 
 type OptionType = '+' | '-';
 
@@ -58,14 +60,13 @@ export const LocalStorage = () => {
   const isButtonDecreaseDisabled = checked
     ? optionMaxValue === 0
     : optionValue === 0;
-    const isOptionCorrect = optionValue > optionMaxValue;
-  const limitStyle = maxValue.current === value ? s.maxvalue : "";
-  const limitOptionStyle = isOptionCorrect ? s.maxvalue : "";
+  const isOptionCorrect = !checked && optionValue === optionMaxValue;
+  
   const isOptionsStyle = options
     ? s.options__wrapper_openned
     : s.options__wrapper_closed;
   const increase = 1;
-  const viasulisation = (100 * value) / maxValue.current;
+  
 
   const increaseValue = () => {
     const valueCounter = value + increase;
@@ -115,45 +116,16 @@ export const LocalStorage = () => {
       <div className={s.maintitle__wrapper}>
         <h2>Counter</h2>
       </div>
-      <section className={s.display__section}>
-        <div className={s.value__wrapper}>
-          <div>
-            <h1>
-              Value: <span>{value}</span>
-            </h1>
-          </div>
-          {options && (
-            <div>
-              <h1>
-                Option Value: <span>{optionValue}</span>
-              </h1>
-            </div>
-          )}
-        </div>
-        <div className={s.maxvalue__wrapper}>
-          <div>
-            <h3>
-              <span className={limitStyle}>Max value:</span>{" "}
-              <span className={limitStyle}>{maxValue.current}</span>
-            </h3>
-          </div>
-          {options && (
-            <div>
-              <h3>
-                <span className={limitOptionStyle}>Option Max value:</span>{" "}
-                <span className={limitOptionStyle}>{optionMaxValue}</span>
-              </h3>
-            </div>
-          )}
-        </div>
-      </section>
-      <section className={s.visualisation__section}>
-        <div
-          style={{ width: `${viasulisation}%` }}
-          className={s.visualisation__inner}
-        ></div>
-      </section>
-      <section className={s.buttons__section}>
+      <CounterDisplay
+        value={value}
+        maxValue={maxValue.current}
+        optionValue={optionValue}
+        optionMaxValue={optionMaxValue}
+        options={options}
+        isOptionCorrect={isOptionCorrect}
+      />
+      <Progressbar value={value} maxValue={maxValue.current} />
+      <div className={s.logic__section}>
         <div className={s.buttonWrapper}>
           <Button
             title="Увеличить"
@@ -168,7 +140,7 @@ export const LocalStorage = () => {
           <Button
             title="Опции"
             onClickHandler={openCloseOptions}
-            propsStyle={options ? s.button_option : ''}
+            propsStyle={options ? s.button_option : ""}
           />
         </div>
         <section className={isOptionsStyle}>
@@ -202,6 +174,7 @@ export const LocalStorage = () => {
                 <Button
                   title="+"
                   onClickHandler={() => changeOptionValue("+")}
+                  disabled={isOptionCorrect}
                 />
                 <Button
                   title="-"
@@ -217,7 +190,7 @@ export const LocalStorage = () => {
             </div>
           </div>
         </section>
-      </section>
+      </div>
     </div>
   );
 }
