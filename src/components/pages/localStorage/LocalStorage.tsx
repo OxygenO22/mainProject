@@ -3,8 +3,9 @@ import { Button } from '../../ui/button/Button';
 import s from './LocalStorage.module.scss'
 import { CounterDisplay } from './CounterDisplay';
 import { Progressbar } from './Progressbar';
+import { CounterOptions } from './CounterOptions';
 
-type OptionType = '+' | '-';
+export type OptionType = "+" | "-";
 
 export const LocalStorage = () => {
   const initialValue = 0;
@@ -57,17 +58,9 @@ export const LocalStorage = () => {
 
   const isButtonAddDisabled = value === maxValue.current;
   const isButtonResetDisabled = value === 0;
-  const isButtonDecreaseDisabled = checked
-    ? optionMaxValue === 0
-    : optionValue === 0;
   const isOptionCorrect = !checked && optionValue === optionMaxValue;
-  
-  const isOptionsStyle = options
-    ? s.options__wrapper_openned
-    : s.options__wrapper_closed;
   const increase = 1;
   
-
   const increaseValue = () => {
     const valueCounter = value + increase;
     if (valueCounter <= maxValue.current) {
@@ -80,6 +73,9 @@ export const LocalStorage = () => {
     maxValue.current = Math.ceil(Math.random() * 20);
   };
 
+  const openCloseOptions = () => {
+    isOptions(!options)
+  }
   const changeOptionValue = (option: OptionType) => {
     if (checked) {
       const optionValueCounter =
@@ -95,21 +91,15 @@ export const LocalStorage = () => {
   const setOptionValues = () => {
     setValue(optionValue);
     maxValue.current = optionMaxValue;
-  }
-
-  const openCloseOptions = () => {
-    isOptions(!options)
-  }
+  };
 
   const clearLS = () => {
     localStorage.clear();
     setValue(0);
     maxValue.current = initialMaxValue;
-  }
+  };
 
-  const removeLSItem = () => {
-    localStorage.removeItem("value");
-  }
+  const removeLSItem = () => localStorage.removeItem("value");
 
   return (
     <div className={s.counter__wrapper}>
@@ -143,53 +133,18 @@ export const LocalStorage = () => {
             propsStyle={options ? s.button_option : ""}
           />
         </div>
-        <section className={isOptionsStyle}>
-          <div className={s.options__item}>
-            <div className={s.options__item_header_wrapper}>
-              <h3>LocalStorage options</h3>
-            </div>
-            <div className={s.options__item_buttons_wrapper}>
-              <Button title="Очистить LS" onClickHandler={clearLS} />
-              <Button title="Удалить LS Value" onClickHandler={removeLSItem} />
-            </div>
-          </div>
-          <div className={s.options__item}>
-            <div className={s.options__item_header_wrapper}>
-              <h3>Values options</h3>
-            </div>
-            <div className={s.options__item_buttons_wrapper}>
-              <div className={s.options__item_input}>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => isChecked(!checked)}
-                  />
-                  <span className={s.input__text}>
-                    {checked ? "Option Max Value" : "Option Value"}
-                  </span>
-                </label>
-              </div>
-              <div className={s.options__item_buttons_values}>
-                <Button
-                  title="+"
-                  onClickHandler={() => changeOptionValue("+")}
-                  disabled={isOptionCorrect}
-                />
-                <Button
-                  title="-"
-                  onClickHandler={() => changeOptionValue("-")}
-                  disabled={isButtonDecreaseDisabled}
-                />
-                <Button
-                  title="Set Values"
-                  onClickHandler={setOptionValues}
-                  disabled={isOptionCorrect}
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+        <CounterOptions
+          checked={checked}
+          optionMaxValue={optionMaxValue}
+          optionValue={optionValue}
+          options={options}
+          isOptionCorrect={isOptionCorrect}
+          changeOptionValue={changeOptionValue}
+          isChecked={isChecked}
+          setOptionValues={setOptionValues}
+          clearLS={clearLS}
+          removeLSItem={removeLSItem}
+        />
       </div>
     </div>
   );
