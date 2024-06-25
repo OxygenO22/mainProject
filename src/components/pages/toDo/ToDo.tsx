@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Todolist } from './Todolist';
 import { FilterValuesType, TaskStateType, TaskType } from '../../../types/common';
 import { v1 } from 'uuid';
 import s from './ToDo.module.scss'
+import { UniversalInput } from '../../ui/input/UniversalInput';
 
 type TodoListType = {
   id: string
@@ -43,6 +44,19 @@ export const ToDo = () => {
       { id: v1(), title: "Nuts", isDone: false },
     ],
   });
+
+  const addTodoList = (title: string) => {
+    const newId = v1();
+    if (title !== "") {
+      const newTodoList: TodoListType = {
+        id: newId,
+        title,
+        filter: "all",
+      };
+      setTodoLists([newTodoList, ...todoLists]);
+      setTasks({ ...tasks, [newId]: [] });
+    }
+  }
 
 
   const addTask = (title: string, todolistId: string) => {
@@ -98,6 +112,22 @@ export const ToDo = () => {
     setTasks(copyTasks);
   };
 
+  const updateTask = (todolistId: string, taskId: string, title: string) => {
+    setTasks({
+      ...tasks,
+      [todolistId]: tasks[todolistId].map((t) =>
+        t.id === taskId ? { ...t, title } : t
+      ),
+    });
+  };
+
+  const updateTodolist = (todolistId: string, title: string) => {
+    
+    setTodoLists(
+      todoLists.map((tl) => (tl.id === todolistId ? { ...tl, title } : tl))
+    );
+  };
+
   // UI
   /* let filteredTasksForTodolist = tasks;
 
@@ -129,12 +159,19 @@ export const ToDo = () => {
         //tasks={tasks[tl.id]} // all don't filtered tasks
         tasks={tasksForTodolist} //  filtered tasks
         changeTaskStatus={changeTaskStatus}
-        removeTodoList={removeTodoList} 
+        removeTodoList={removeTodoList}
+        updateTask={updateTask}
+        updateTodolist={updateTodolist}
       />
     );
   })
 
   
 
-  return <div className={s.todolist__wrapper}>{todoListsElements}</div>;
-}
+  return (
+    <div className={s.todolist__wrapper}>
+      <UniversalInput addItem={addTodoList} />
+      {todoListsElements}
+    </div>
+  );
+};

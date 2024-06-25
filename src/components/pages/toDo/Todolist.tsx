@@ -2,10 +2,12 @@ import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "../../ui/button/Button";
 import { FilterValuesType, TaskType } from "../../../types/common";
 import s from './ToDo.module.scss'
+import { UniversalInput } from "../../ui/input/UniversalInput";
+import { EditableSpan } from "./EditableSpan";
 
 
 type TodolistPropsType = {
-  todolistId: string
+  todolistId: string;
   filter: FilterValuesType;
   title: string;
   tasks: Array<TaskType>;
@@ -21,6 +23,8 @@ type TodolistPropsType = {
     todolistId: string
   ) => void;
   removeTodoList: (todolistId: string) => void;
+  updateTask: (todolistId: string, taskId: string, title: string) => void;
+  updateTodolist: (todolistId: string, title: string) => void;
 };
 
 export const Todolist = ({
@@ -33,44 +37,31 @@ export const Todolist = ({
   changeTodoListFilter,
   changeTaskStatus,
   removeTodoList,
+  updateTask,
+  updateTodolist,
 }: TodolistPropsType) => {
-  const [taskTitle, setTaskTitle] = useState<string>("");
-  const [tasknputError, setTasknputError] = useState<string | null>(null);
+  //const [taskTitle, setTaskTitle] = useState<string>("");
+  //const [tasknputError, setTasknputError] = useState<string | null>(null);
 
-  const isAddTaskButtonDisabled = !taskTitle.trim() || taskTitle.length > 25;
-  const warningInput = taskTitle.length > 15 && (
-    <div>Recomended 15 symbols</div>
-  );
-
-  const imputError = tasknputError && <div>{tasknputError}</div>;
-
-  const textHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTaskTitle(e.currentTarget.value);
-    tasknputError && setTasknputError(null);
-  };
-
-  const addTaksHandler = () => {
-    const trimmedTitle = taskTitle.trim();
-    if (trimmedTitle) {
-      addTask(taskTitle, todolistId);
-      setTaskTitle("");
-    } else {
-      setTasknputError("Please fill the title");
-    }
-  };
-
-  const checkInputOnLeave = () =>
-    !taskTitle.trim() && setTasknputError("To add task title should be filled");
-
-  const keyDownAddTaskHandler = (e: KeyboardEvent<HTMLInputElement>) =>
-    e.key === "Enter" && addTaksHandler();
-
-  const  changeFilterTaskHandler = (filter: FilterValuesType) =>
+  const changeFilterTaskHandler = (filter: FilterValuesType) =>
     changeTodoListFilter(filter, todolistId);
 
-  const tasksElements: JSX.Element[] | JSX.Element =
-    tasks.length !== 0 ? (
-      tasks.map((task) => {
+  const addTaskHandler = (taskTitle: string) => {
+    addTask(taskTitle, todolistId);
+  };
+
+  const updateTodolistHandler = (title: string) => {
+    updateTodolist(todolistId, title);
+  };
+
+  /* const changeTaskTitleHandler = (title: string, taskId: string) => {
+          updateTask(todolistId, taskId, title);
+  } */
+
+  const mappedTasks = tasks.map((task) => {
+        const changeTaskTitleHandler = (title: string) => {
+          updateTask(todolistId, task.id, title);
+        };
         return (
           <li key={task.id} className={s.list__item}>
             <input
@@ -80,7 +71,16 @@ export const Todolist = ({
                 changeTaskStatus(task.id, e.currentTarget.checked, todolistId)
               }
             />
-            <span className={task.isDone ? s.isdone : ""}>{task.title}</span>
+            <p className={task.isDone ? s.isdone : ""}>
+              <EditableSpan
+                value={task.title}
+                /* onChange={(title) =>
+                  changeTaskTitleHandler(title, task.id)
+                } */
+               onChange={changeTaskTitleHandler}
+              />
+            </p>
+
             <Button
               onClickHandler={() => removeTask(task.id, todolistId)}
               title={"x"}
@@ -88,33 +88,17 @@ export const Todolist = ({
           </li>
         );
       })
-    ) : (
-      <span>Your taskslist is empty</span>
-    );
+
+  const tasksElements: JSX.Element[] | JSX.Element =
+    tasks.length !== 0 ? mappedTasks : <span>Your taskslist is empty</span>;
 
   return (
     <div className={s.todolist}>
       <h3>
-        {title}
+        <EditableSpan value={title} onChange={updateTodolistHandler} />
         <button onClick={() => removeTodoList(todolistId)}>x</button>
       </h3>
-      <div>
-        <input
-          type="text"
-          value={taskTitle}
-          onChange={textHandler}
-          onKeyDown={keyDownAddTaskHandler}
-          className={tasknputError ? s.inputerror : ""}
-          onBlur={checkInputOnLeave}
-        />
-        <Button
-          title={"+"}
-          disabled={isAddTaskButtonDisabled}
-          onClickHandler={addTaksHandler}
-        />
-        {warningInput}
-        {imputError}
-      </div>
+      <UniversalInput addItem={addTaskHandler} />
       <ul>{tasksElements}</ul>
       <div>
         <Button
