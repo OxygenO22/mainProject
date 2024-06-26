@@ -2,6 +2,7 @@ import React from 'react'
 import { Header } from '../header/Header'
 import { Outlet } from 'react-router-dom'
 import s from './Layout.module.scss'
+import { PageTitle } from '../../ui/pageTitle/PageTitle'
 
 export const Layout = () => {
   return (
@@ -11,7 +12,9 @@ export const Layout = () => {
           <Header />
         </aside>
         <section className={s.section__wrapper}>
-          <Outlet />
+          <div className={s.outlet__wrapper}>
+            <Outlet />
+          </div>
         </section>
       </div>
     </div>

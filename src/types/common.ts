@@ -9,3 +9,7 @@ export type TaskType = {
 }
 
 export type FilterValuesType = 'all'|'active'|'completed'
+
+export type PageTitleType = {
+    pageTitle: string
+}

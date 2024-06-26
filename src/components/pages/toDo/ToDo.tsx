@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { Todolist } from './Todolist';
-import { FilterValuesType, TaskStateType, TaskType } from '../../../types/common';
+import { FilterValuesType, PageTitleType, TaskStateType, TaskType } from '../../../types/common';
 import { v1 } from 'uuid';
 import s from './ToDo.module.scss'
 import { UniversalInput } from '../../ui/input/UniversalInput';
+import { PageTitle } from '../../ui/pageTitle/PageTitle';
 
 type TodoListType = {
   id: string
@@ -12,7 +13,6 @@ type TodoListType = {
 }
 
 export const ToDo = () => {
-
   const todoListId_1 = v1();
   const todoListId_2 = v1();
 
@@ -56,8 +56,7 @@ export const ToDo = () => {
       setTodoLists([newTodoList, ...todoLists]);
       setTasks({ ...tasks, [newId]: [] });
     }
-  }
-
+  };
 
   const addTask = (title: string, todolistId: string) => {
     if (title !== "") {
@@ -84,12 +83,19 @@ export const ToDo = () => {
     const copyTasks = {...tasks};
     copyTasks[todolistId] = filteredTasks;
     setTasks(copyTasks); */
-  }
+  };
 
-  const changeTodoListFilter = (filter: FilterValuesType, todolistId: string) =>{
+  const changeTodoListFilter = (
+    filter: FilterValuesType,
+    todolistId: string
+  ) => {
     /* setFilter(newFilterValue); */
-    setTodoLists(todoLists.map(tl => tl.id === todolistId ? {...tl, filter: filter}: tl))
-  }
+    setTodoLists(
+      todoLists.map((tl) =>
+        tl.id === todolistId ? { ...tl, filter: filter } : tl
+      )
+    );
+  };
 
   const changeTaskStatus = (
     taskId: string,
@@ -100,9 +106,12 @@ export const ToDo = () => {
       t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
     );
     setTasks(nextState); */
-    setTasks({...tasks, [todolistId]: tasks[todolistId].map((t) =>
-      t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
-    )})
+    setTasks({
+      ...tasks,
+      [todolistId]: tasks[todolistId].map((t) =>
+        t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
+      ),
+    });
   };
 
   const removeTodoList = (todolistId: string) => {
@@ -122,7 +131,6 @@ export const ToDo = () => {
   };
 
   const updateTodolist = (todolistId: string, title: string) => {
-    
     setTodoLists(
       todoLists.map((tl) => (tl.id === todolistId ? { ...tl, title } : tl))
     );
@@ -138,7 +146,7 @@ export const ToDo = () => {
       filteredTasksForTodolist = tasks.filter((t) => t.isDone);
     } */
 
-  const todoListsElements = todoLists.map(tl => {
+  const todoListsElements = todoLists.map((tl) => {
     let tasksForTodolist = tasks[tl.id];
     if (tl.filter === "active") {
       tasksForTodolist = tasks[tl.id].filter((t) => !t.isDone);
@@ -164,12 +172,11 @@ export const ToDo = () => {
         updateTodolist={updateTodolist}
       />
     );
-  })
-
-  
+  });
 
   return (
     <div className={s.todolist__wrapper}>
+      <PageTitle pageTitle={'Todo'} />
       <UniversalInput addItem={addTodoList} />
       {todoListsElements}
     </div>
