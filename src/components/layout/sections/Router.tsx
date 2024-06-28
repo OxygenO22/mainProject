@@ -10,7 +10,7 @@ import { NotFound } from '../../pages/notFound/NotFound'
 import { S2hw1Microtask } from '../../pages/s2hw1/S2hw1Microtask'
 import { S2eLesson1 } from '../../pages/s2eLesson1/S2eLesson1'
 import { LocalStorage } from '../../pages/localStorage/LocalStorage'
-import { S2eLection2 } from '../../pages/s2eLection2/S2eLection2'
+import { S2eLesson2 } from '../../pages/s2eLesson2/S2eLesson2'
 
 export const Router = () => {
   return (
@@ -24,7 +24,7 @@ export const Router = () => {
           <Route path="/atm" element={<MainWithIgor />} />
           <Route path="/s2hw1" element={<S2hw1Microtask />} />
           <Route path="/s2eLesson1" element={<S2eLesson1 />} />
-          <Route path="/s2eLesson2" element={<S2eLection2 />} />
+          <Route path="/s2eLesson2" element={<S2eLesson2 />} />
           <Route path="/LSCounter" element={<LocalStorage />} />
           <Route element={<NotFound />} path="*" />
         </Route>

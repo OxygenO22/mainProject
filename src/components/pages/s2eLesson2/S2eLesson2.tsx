@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { v1 } from 'uuid';
-import { TodolistS2eLection2 } from './TodolistS2eLection2';
+import { TodolistS2eLesson2 } from './TodolistS2eLesson2';
 
 type ObjectType = {
   todolistId: string;
@@ -17,7 +17,7 @@ export type TasksType = {
 
 export type FilterValuesType = "all" | "active" | "completed";
 
-export const S2eLection2 = () => {
+export const S2eLesson2 = () => {
 
   // let todolistId1 = v1();
     // let todolistId2 = v1();
@@ -334,7 +334,7 @@ export const S2eLection2 = () => {
         }
 
         return (
-          <TodolistS2eLection2
+          <TodolistS2eLesson2
             key={tl.todolistId}
             id={tl.todolistId}
             title={tl.title}

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, KeyboardEvent } from "react";
-import { FilterValuesType, TasksType } from "./S2eLection2";
+import { FilterValuesType, TasksType } from "./S2eLesson2";
 
 // export type TaskType = {
 //     id: string
@@ -19,7 +19,7 @@ type PropsType = {
   filter: FilterValuesType;
 };
 
-export const TodolistS2eLection2 = (props: PropsType) => {
+export const TodolistS2eLesson2 = (props: PropsType) => {
   let [title, setTitle] = useState("");
   let [error, setError] = useState<string | null>(null);
 
