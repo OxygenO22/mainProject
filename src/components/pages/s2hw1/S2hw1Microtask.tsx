@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { v1 } from 'uuid';
-import { TaskType, Todolist } from './Todolist';
+import { S2hw1Todolist, TaskType } from './S2hw1Todolist';
 
 export type FilterValuesType = "all" | "active" | "completed";
 
@@ -49,11 +49,9 @@ export const S2hw1Microtask = () => {
     ],
   });
 
-  function removeTask(id: string) {
-    /* let filteredTasks = tasksForTodolist.map((f) =>
-      f.filter((t) => t.id != id)
-    );   ;
-    setTasks(filteredTasks); */
+  function removeTask(id: string, todolistId: string) {
+    let removeTask = {...tasks, [todolistId]: [...tasks[todolistId].filter(t => t.id !== id)]}
+    setTasks(removeTask);
   }
 
   function addTask(title: string) {
@@ -91,7 +89,7 @@ export const S2hw1Microtask = () => {
     }
 
     return (
-      <Todolist
+      <S2hw1Todolist
         key={tl.id}
         title={tl.title}
         tasks={tasksForTodolist}

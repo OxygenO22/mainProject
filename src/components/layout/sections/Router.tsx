@@ -11,6 +11,8 @@ import { S2hw1Microtask } from '../../pages/s2hw1/S2hw1Microtask'
 import { S2eLesson1 } from '../../pages/s2eLesson1/S2eLesson1'
 import { LocalStorage } from '../../pages/localStorage/LocalStorage'
 import { S2eLesson2 } from '../../pages/s2eLesson2/S2eLesson2'
+import { S2eLesson3 } from '../../pages/s2eLesson3/S2eLesson3'
+import { MaterialUI } from '../../pages/materialUI/MaterialUI'
 
 export const Router = () => {
   return (
@@ -25,7 +27,9 @@ export const Router = () => {
           <Route path="/s2hw1" element={<S2hw1Microtask />} />
           <Route path="/s2eLesson1" element={<S2eLesson1 />} />
           <Route path="/s2eLesson2" element={<S2eLesson2 />} />
+          <Route path="/s2eLesson3" element={<S2eLesson3 />} />
           <Route path="/LSCounter" element={<LocalStorage />} />
+          <Route path="/MaterialUI" element={<MaterialUI />} />
           <Route element={<NotFound />} path="*" />
         </Route>
       </Routes>
