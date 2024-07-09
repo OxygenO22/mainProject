@@ -1,18 +1,22 @@
-import React, { useRef, useState } from 'react'
-import { Todolist } from './Todolist';
-import { FilterValuesType, PageTitleType, TaskStateType, TaskType } from '../../../types/common';
-import { v1 } from 'uuid';
-import s from './ToDo.module.scss'
-import { UniversalInput } from '../../ui/input/UniversalInput';
-import { PageTitle } from '../../ui/pageTitle/PageTitle';
+import React, { useRef, useState } from "react";
+import {
+  FilterValuesType,
+  PageTitleType,
+  TaskStateType,
+  TaskType,
+} from "../../../types/common";
+import { v1 } from "uuid";
+import s from "./ReducerTestsToDo.module.scss";
+import { UniversalInput } from "../../ui/input/UniversalInput";
+import { ReducerTestsTodolist } from "./ReducerTestsTodolist";
 
 type TodoListType = {
-  id: string
-  title: string
-  filter: FilterValuesType
-}
+  id: string;
+  title: string;
+  filter: FilterValuesType;
+};
 
-export const ToDo = () => {
+export const ReducerTestsToDo = () => {
   const todoListId_1 = v1();
   const todoListId_2 = v1();
 
@@ -156,7 +160,7 @@ export const ToDo = () => {
     }
 
     return (
-      <Todolist
+      <ReducerTestsTodolist
         key={tl.id}
         todolistId={tl.id}
         addTask={addTask}

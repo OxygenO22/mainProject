@@ -39,7 +39,6 @@ export const MainWithIgor = () => {
     // а вот сейчас притормаживаем. И вдумчиво: константа filteredMoney получает результат функции moneyFilter
     // в функцию передаем деньги и фильтр, по которому ихбудем выдавать(ретёрнуть)
     const filteredMoney = moneyFilter(money, filterValue)
-    console.log(filteredMoney)
 
     const addMoney = (banknote: BanknotsType) => {
         // Добавление денег сделаем в последнюю очередь, после настройки фильтров и отрисовки денег

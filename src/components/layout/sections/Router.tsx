@@ -13,6 +13,7 @@ import { LocalStorage } from '../../pages/localStorage/LocalStorage'
 import { S2eLesson2 } from '../../pages/s2eLesson2/S2eLesson2'
 import { S2eLesson3 } from '../../pages/s2eLesson3/S2eLesson3'
 import { MaterialUI } from '../../pages/materialUI/MaterialUI'
+import { ReducerTestsToDo } from '../../pages/reducerTests/ReducerTestsToDo'
 
 export const Router = () => {
   return (
@@ -30,6 +31,7 @@ export const Router = () => {
           <Route path="/s2eLesson3" element={<S2eLesson3 />} />
           <Route path="/LSCounter" element={<LocalStorage />} />
           <Route path="/MaterialUI" element={<MaterialUI />} />
+          <Route path="/ReducerTests" element={<ReducerTestsToDo />} />
           <Route element={<NotFound />} path="*" />
         </Route>
       </Routes>
