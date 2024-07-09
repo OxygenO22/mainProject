@@ -12,6 +12,7 @@ export const Layout = () => {
           <Header />
         </aside>
         <section className={s.section__wrapper}>
+          <PageTitle />
           <div className={s.outlet__wrapper}>
             <Outlet />
           </div>
