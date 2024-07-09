@@ -1,5 +1,6 @@
 .todolist__wrapper {
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -7,8 +8,18 @@
   height: 100%;
 }
 
+.todolist__input_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.todolist__item_wrapper {
+  display: flex;
+  width: 100%;
+}
+
 .todolist {
-  background-color: cadetblue;
+  background-color: rgb(123, 95, 160);
   border: 2px solid gray;
   border-radius: 5px;
   padding: 15px;
@@ -20,7 +31,31 @@
 }
 
 
-
 .list__item {
   list-style: none;
+}
+
+.todolist__title_wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.list__item_inner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.todolist__tasks_wrapper {
+  margin-bottom: 20px;
+}
+
+.todolist__buttons_wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

@@ -38,7 +38,7 @@ export const UniversalInput = ({ addItem }: UniversalInputPropsType) => {
     !taskTitle.trim() && setTasknputError("To add task title should be filled");
 
   return (
-    <div>
+    <div className={s.input__wrapper}>
       <input
         type="text"
         value={taskTitle}

@@ -1,4 +1,3 @@
-import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { Button } from "../../ui/button/Button";
 import { FilterValuesType, TaskType } from "../../../types/common";
 import s from "./ReducerTestsToDo.module.scss";
@@ -63,27 +62,29 @@ export const ReducerTestsTodolist = ({
     };
     return (
       <li key={task.id} className={s.list__item}>
-        <input
-          type="checkbox"
-          checked={task.isDone}
-          onChange={(e) =>
-            changeTaskStatus(task.id, e.currentTarget.checked, todolistId)
-          }
-        />
-        <p className={task.isDone ? s.isdone : ""}>
-          <ReducerTestsEditableSpan
-            value={task.title}
-            /* onChange={(title) =>
+        <div className={s.list__item_inner}>
+          <input
+            type="checkbox"
+            checked={task.isDone}
+            onChange={(e) =>
+              changeTaskStatus(task.id, e.currentTarget.checked, todolistId)
+            }
+          />
+          <p className={task.isDone ? s.isdone : ""}>
+            <ReducerTestsEditableSpan
+              value={task.title}
+              /* onChange={(title) =>
                   changeTaskTitleHandler(title, task.id)
                 } */
-            onChange={changeTaskTitleHandler}
-          />
-        </p>
+              onChange={changeTaskTitleHandler}
+            />
+          </p>
 
-        <Button
-          onClickHandler={() => removeTask(task.id, todolistId)}
-          title={"x"}
-        />
+          <Button
+            onClickHandler={() => removeTask(task.id, todolistId)}
+            title={"x"}
+          />
+        </div>
       </li>
     );
   });
@@ -93,16 +94,21 @@ export const ReducerTestsTodolist = ({
 
   return (
     <div className={s.todolist}>
-      <h3>
-        <ReducerTestsEditableSpan
-          value={title}
-          onChange={updateTodolistHandler}
+      <div className={s.todolist__title_wrapper}>
+        <h3>
+          <ReducerTestsEditableSpan
+            value={title}
+            onChange={updateTodolistHandler}
+          />
+        </h3>
+        <Button
+          onClickHandler={() => removeTodoList(todolistId)}
+          title={"x"}
         />
-        <button onClick={() => removeTodoList(todolistId)}>x</button>
-      </h3>
+      </div>
       <UniversalInput addItem={addTaskHandler} />
-      <ul>{tasksElements}</ul>
-      <div>
+      <ul className={s.todolist__tasks_wrapper}>{tasksElements}</ul>
+      <div className={s.todolist__buttons_wrapper}>
         <Button
           onClickHandler={() => changeFilterTaskHandler("all")}
           title={"All"}

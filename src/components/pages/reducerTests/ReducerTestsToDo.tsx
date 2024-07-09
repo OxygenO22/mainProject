@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
   FilterValuesType,
-  PageTitleType,
   TaskStateType,
   TaskType,
 } from "../../../types/common";
@@ -10,13 +9,17 @@ import s from "./ReducerTestsToDo.module.scss";
 import { UniversalInput } from "../../ui/input/UniversalInput";
 import { ReducerTestsTodolist } from "./ReducerTestsTodolist";
 
-type TodoListType = {
+export type TodoListType = {
   id: string;
   title: string;
   filter: FilterValuesType;
 };
 
 export const ReducerTestsToDo = () => {
+
+  /// BLL
+  /// Global states
+
   const todoListId_1 = v1();
   const todoListId_2 = v1();
 
@@ -49,6 +52,8 @@ export const ReducerTestsToDo = () => {
     ],
   });
 
+  /// CRUD todolist
+
   const addTodoList = (title: string) => {
     const newId = v1();
     if (title !== "") {
@@ -62,38 +67,24 @@ export const ReducerTestsToDo = () => {
     }
   };
 
-  const addTask = (title: string, todolistId: string) => {
-    if (title !== "") {
-      const newTask: TaskType = {
-        id: v1(),
-        title,
-        isDone: false,
-      };
-      /* setTasks([...tasks, newTask]); */
-      setTasks({ ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] });
-    }
+
+  const removeTodoList = (todolistId: string) => {
+    setTodoLists(todoLists.filter((tl) => tl.id !== todolistId));
+    const copyTasks = { ...tasks };
+    delete copyTasks[todolistId];
+    setTasks(copyTasks);
   };
 
-  const removeTask = (taskId: string, todolistId: string) => {
-    /* setTasks(tasks.filter((t) => t.id !== taskId)); */
-
-    setTasks({
-      ...tasks,
-      [todolistId]: tasks[todolistId].filter((t) => t.id !== taskId),
-    });
-    // explainded
-    /* const updatedTasks = tasks[todolistId];
-    const filteredTasks = updatedTasks.filter((t) => t.id !== taskId);
-    const copyTasks = {...tasks};
-    copyTasks[todolistId] = filteredTasks;
-    setTasks(copyTasks); */
+  const updateTodolist = (todolistId: string, title: string) => {
+    setTodoLists(
+      todoLists.map((tl) => (tl.id === todolistId ? { ...tl, title } : tl))
+    );
   };
 
   const changeTodoListFilter = (
     filter: FilterValuesType,
     todolistId: string
   ) => {
-    /* setFilter(newFilterValue); */
     setTodoLists(
       todoLists.map((tl) =>
         tl.id === todolistId ? { ...tl, filter: filter } : tl
@@ -101,28 +92,38 @@ export const ReducerTestsToDo = () => {
     );
   };
 
+  /// CRUD tasks
+
+  const addTask = (title: string, todolistId: string) => {
+    if (title !== "") {
+      const newTask: TaskType = {
+        id: v1(),
+        title,
+        isDone: false,
+      };
+      setTasks({ ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] });
+    }
+  };
+
+  const removeTask = (taskId: string, todolistId: string) => {
+    setTasks({
+      ...tasks,
+      [todolistId]: tasks[todolistId].filter((t) => t.id !== taskId),
+    });
+  };
+
+
   const changeTaskStatus = (
     taskId: string,
     newIsDoneValue: boolean,
     todolistId: string
   ) => {
-    /* const nextState: TaskType[] = tasks.map((t) =>
-      t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
-    );
-    setTasks(nextState); */
     setTasks({
       ...tasks,
       [todolistId]: tasks[todolistId].map((t) =>
         t.id === taskId ? { ...t, isDone: newIsDoneValue } : t
       ),
     });
-  };
-
-  const removeTodoList = (todolistId: string) => {
-    setTodoLists(todoLists.filter((tl) => tl.id !== todolistId));
-    const copyTasks = { ...tasks };
-    delete copyTasks[todolistId];
-    setTasks(copyTasks);
   };
 
   const updateTask = (todolistId: string, taskId: string, title: string) => {
@@ -133,22 +134,6 @@ export const ReducerTestsToDo = () => {
       ),
     });
   };
-
-  const updateTodolist = (todolistId: string, title: string) => {
-    setTodoLists(
-      todoLists.map((tl) => (tl.id === todolistId ? { ...tl, title } : tl))
-    );
-  };
-
-  // UI
-  /* let filteredTasksForTodolist = tasks;
-
-    if (filter === "active") {
-      filteredTasksForTodolist = tasks.filter((t) => !t.isDone);
-    }
-    if (filter === "completed") {
-      filteredTasksForTodolist = tasks.filter((t) => t.isDone);
-    } */
 
   const todoListsElements = todoLists.map((tl) => {
     let tasksForTodolist = tasks[tl.id];
@@ -168,8 +153,7 @@ export const ReducerTestsToDo = () => {
         removeTask={removeTask}
         title={tl.title}
         filter={tl.filter}
-        //tasks={tasks[tl.id]} // all don't filtered tasks
-        tasks={tasksForTodolist} //  filtered tasks
+        tasks={tasksForTodolist}
         changeTaskStatus={changeTaskStatus}
         removeTodoList={removeTodoList}
         updateTask={updateTask}
@@ -180,8 +164,13 @@ export const ReducerTestsToDo = () => {
 
   return (
     <div className={s.todolist__wrapper}>
-      <UniversalInput addItem={addTodoList} />
-      {todoListsElements}
+      <div className={s.todolist__input_wrapper}>
+        <div>
+          <h3>Add Todolist</h3>
+        </div>
+        <UniversalInput addItem={addTodoList} />
+      </div>
+      <div className={s.todolist__item_wrapper}>{todoListsElements}</div>
     </div>
   );
 };
