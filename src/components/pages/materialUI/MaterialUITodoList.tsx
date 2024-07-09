@@ -83,7 +83,6 @@ export const MaterialUITodoList = (props: PropsType) => {
           id="outlined-basic"
           label="Enter a title"
           variant="outlined"
-          defaultValue="Default Value"
           value={title}
           onChange={onChangeHandler}
         />
