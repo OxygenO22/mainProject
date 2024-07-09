@@ -1,4 +1,4 @@
-import { ActionType, todolistsReducer } from './todolists-reducer'
+import { ActionType, AddTodoListActionCreator, ChangeTodoListFilterActionCreator, RemoveTodoListActionCreator, todolistsReducer, UpdateTodoListTitleActionCreator } from './todolists-reducer'
 import { v1 } from 'uuid'
 import { TodoListType } from '../ReducerTestsToDo'
  
@@ -13,12 +13,7 @@ test('correct todolist should be removed', () => {
   ]
  
   // 2. Действие
-  const action: ActionType = {
-    type: 'REMOVE-TODOLIST', // or: as const, without ActionType
-    payload: {
-      id: todolistId1,
-    },
-  }
+  const action = RemoveTodoListActionCreator(todolistId1)
   const endState = todolistsReducer(startState, action)
  
   // 3. Проверяем, что наши действия (изменения state) соответствуют ожиданию
@@ -37,13 +32,7 @@ test('correct todolist should be added', () => {
     { id: todolistId2, title: 'What to buy', filter: 'all' },
   ]
  
-  const action: ActionType = {
-    type: 'ADD-TODOLIST',
-    payload: {
-      title: 'New Todolist',
-      id: v1()
-    },
-  }
+  const action = AddTodoListActionCreator('New Todolist', v1()) 
   const endState = todolistsReducer(startState, action)
  
   expect(endState.length).toBe(3)
@@ -59,13 +48,7 @@ test('correct todolist should change its name', () => {
     { id: todolistId2, title: 'What to buy', filter: 'all' },
   ]
  
-  const action: ActionType = {
-    type: 'UPDATE-TODOLIST-TITLE',
-    payload: {
-      id: todolistId2,
-      title: 'New Todolist',
-    },
-  }
+  const action = UpdateTodoListTitleActionCreator(todolistId2, 'New Todolist')
   const endState = todolistsReducer(startState, action)
  
   expect(endState[0].title).toBe('What to learn')
@@ -81,13 +64,7 @@ test('correct filter of todolist should be changed', () => {
     { id: todolistId2, title: 'What to buy', filter: 'all' },
   ]
  
-  const action: ActionType = {
-    type: 'CHANGE-TODOLIST-FILTER',
-    payload: {
-      id: todolistId2,
-      filter: 'completed',
-    },
-  }
+  const action = ChangeTodoListFilterActionCreator('completed', todolistId2)
   const endState = todolistsReducer(startState, action)
  
   expect(endState[0].filter).toBe('all')

@@ -2,7 +2,7 @@ import { v1 } from "uuid";
 import { TodoListType } from "../ReducerTestsToDo";
 import { FilterValuesType } from "../../s2hw1/S2hw1Microtask";
 
-type AddTodoListActionTtype = {
+type AddTodoListActionType = {
   type: "ADD-TODOLIST"
   payload: {
     title: string
@@ -10,14 +10,14 @@ type AddTodoListActionTtype = {
   }
 }
 
-type RemoveTodoListActionTtype = {
+type RemoveTodoListActionType = {
   type: "REMOVE-TODOLIST"
   payload: {
     id: string
   }
 } 
 
-type ChangeTodoListFilterActionTtype = {
+type ChangeTodoListFilterActionType = {
   type: "CHANGE-TODOLIST-FILTER"
   payload: {
     filter: FilterValuesType,
@@ -25,7 +25,7 @@ type ChangeTodoListFilterActionTtype = {
   }
 } 
 
-type UpdateTodoListTitleActionTtype = {
+type UpdateTodoListTitleActionType = {
   type: "UPDATE-TODOLIST-TITLE"
   payload: {
     id: string, 
@@ -33,7 +33,7 @@ type UpdateTodoListTitleActionTtype = {
   }
 } 
 
-export type ActionType = AddTodoListActionTtype | RemoveTodoListActionTtype | ChangeTodoListFilterActionTtype | UpdateTodoListTitleActionTtype
+export type ActionType = AddTodoListActionType | RemoveTodoListActionType | ChangeTodoListFilterActionType | UpdateTodoListTitleActionType
 
 export const todolistsReducer = (todolists: TodoListType[], action: ActionType): TodoListType[] => {
   switch (action.type) {
@@ -68,3 +68,35 @@ export const todolistsReducer = (todolists: TodoListType[], action: ActionType):
       return todolists;
   }
 }
+
+export const AddTodoListActionCreator = (id: string, title: string): AddTodoListActionType => ({
+  type: "ADD-TODOLIST",
+  payload: {
+    title,
+    id
+  }
+})
+
+export const RemoveTodoListActionCreator = (id: string): RemoveTodoListActionType => ({
+  type: "REMOVE-TODOLIST",
+  payload: {
+    id
+  }
+})
+
+export const ChangeTodoListFilterActionCreator = (filter: FilterValuesType, id: string): ChangeTodoListFilterActionType => ({
+  type: "CHANGE-TODOLIST-FILTER",
+  payload: {
+    filter,
+    id
+  }
+})
+
+export const UpdateTodoListTitleActionCreator = (id: string, 
+    title: string): UpdateTodoListTitleActionType => ({
+  type: "UPDATE-TODOLIST-TITLE",
+  payload: {
+    id,
+    title
+  }
+})
