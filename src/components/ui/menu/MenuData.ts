@@ -11,4 +11,5 @@ export const MenuData = [
   {id: 10, path: '/LSCounter', name: 'LS Counter'},
   {id: 11, path: '/MaterialUI', name: 'MaterialUI'},
   {id: 12, path: '/ReducerTests', name: 'Reducer + Tests'},
+  {id: 13, path: '/ReduxTK', name: 'ReduxTK'},
 ];
