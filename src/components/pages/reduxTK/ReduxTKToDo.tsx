@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   FilterValuesType,
   TaskStateType,
@@ -8,6 +8,9 @@ import { v1 } from "uuid";
 import s from "./ReduxTKToDo.module.scss";
 import { UniversalInput } from "../../ui/input/UniversalInput";
 import { ReduxTKTodolist } from "./ReduxTKTodolist";
+import { useAppDispatch, useAppSelector } from "./hook/hook";
+import { addTodoList } from "./store/slices/todoListsSlice";
+import { addNewTask } from "./store/slices/tasksSlice";
 
 export type TodoListType = {
   id: string;
@@ -16,11 +19,53 @@ export type TodoListType = {
 };
 
 export const ReduxTKToDo = () => {
+  const dispatch = useAppDispatch();
+  
   /// BLL
   /// Global states
 
   const todoListId_1 = v1();
   const todoListId_2 = v1();
+
+  /* const todoListsTK = useAppSelector((state) => [
+    ...state.todoLists.todoLists,
+    {
+      id: todoListId_1,
+      title: "What to learn",
+      filter: "all",
+    },
+    {
+      id: todoListId_2,
+      title: "What to buy",
+      filter: "all",
+    },
+  ]); */
+  const todoListsTK = useAppSelector((state) => state.todoLists.todoLists);
+  console.log(todoListsTK);
+
+  /* const tasksTK = useAppSelector(
+    (state) =>
+      (state.tasks.tasks = {
+        ...state.tasks.tasks,
+        [todoListId_1]: [
+          { id: v1(), title: "HTML", isDone: true },
+          { id: v1(), title: "CSS", isDone: true },
+          { id: v1(), title: "JS/TS", isDone: false },
+          { id: v1(), title: "REACT", isDone: false },
+        ],
+
+        [todoListId_2]: [
+          { id: v1(), title: "Beer", isDone: true },
+          { id: v1(), title: "Chips", isDone: true },
+          { id: v1(), title: "Dried fish", isDone: false },
+          { id: v1(), title: "Nuts", isDone: false },
+        ],
+      })
+  ); */
+
+  const tasksTK = useAppSelector((state) => state.tasks.tasks);
+  console.log(tasksTK);
+
 
   const [todoLists, setTodoLists] = useState<TodoListType[]>([
     {
@@ -53,7 +98,13 @@ export const ReduxTKToDo = () => {
 
   /// CRUD todolist
 
-  const addTodoList = (title: string) => {
+  const addNewTodoList = (title: string) => {
+    const newId = v1();
+    dispatch(addTodoList({ title, todolistId: newId}));
+    dispatch(addNewTask({ todolistId: newId, title: '' }));
+  };
+
+  /* const addTodoList = (title: string) => {
     const newId = v1();
     if (title !== "") {
       const newTodoList: TodoListType = {
@@ -64,30 +115,30 @@ export const ReduxTKToDo = () => {
       setTodoLists([newTodoList, ...todoLists]);
       setTasks({ ...tasks, [newId]: [] });
     }
-  };
+  }; */
 
   const removeTodoList = (todolistId: string) => {
-    setTodoLists(todoLists.filter((tl) => tl.id !== todolistId));
+    /* setTodoLists(todoLists.filter((tl) => tl.id !== todolistId));
     const copyTasks = { ...tasks };
     delete copyTasks[todolistId];
-    setTasks(copyTasks);
+    setTasks(copyTasks); */
   };
 
   const updateTodolist = (todolistId: string, title: string) => {
-    setTodoLists(
+    /* setTodoLists(
       todoLists.map((tl) => (tl.id === todolistId ? { ...tl, title } : tl))
-    );
+    ); */
   };
 
   const changeTodoListFilter = (
     filter: FilterValuesType,
     todolistId: string
   ) => {
-    setTodoLists(
+    /* setTodoLists(
       todoLists.map((tl) =>
         tl.id === todolistId ? { ...tl, filter: filter } : tl
       )
-    );
+    ); */
   };
 
   /// CRUD tasks
@@ -165,7 +216,7 @@ export const ReduxTKToDo = () => {
         <div>
           <h3>Add Todolist</h3>
         </div>
-        <UniversalInput addItem={addTodoList} />
+        <UniversalInput addItem={addNewTodoList} />
       </div>
       <div className={s.todolist__item_wrapper}>{todoListsElements}</div>
     </div>

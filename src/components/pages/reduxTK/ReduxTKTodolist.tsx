@@ -3,6 +3,8 @@ import { FilterValuesType, TaskType } from "../../../types/common";
 import s from "./ReduxTKToDo.module.scss";
 import { UniversalInput } from "../../ui/input/UniversalInput";
 import { ReduxTKEditableSpan } from "./ReduxTKEditableSpan";
+import { useAppDispatch } from "./hook/hook";
+import { removeTodoList } from "./store/slices/todoListsSlice";
 
 type TodolistPropsType = {
   todolistId: string;
@@ -40,6 +42,8 @@ export const ReduxTKTodolist = ({
 }: TodolistPropsType) => {
   //const [taskTitle, setTaskTitle] = useState<string>("");
   //const [tasknputError, setTasknputError] = useState<string | null>(null);
+
+  const dispatch = useAppDispatch();
 
   const changeFilterTaskHandler = (filter: FilterValuesType) =>
     changeTodoListFilter(filter, todolistId);
@@ -98,7 +102,7 @@ export const ReduxTKTodolist = ({
         <h3>
           <ReduxTKEditableSpan value={title} onChange={updateTodolistHandler} />
         </h3>
-        <Button onClickHandler={() => removeTodoList(todolistId)} title={"x"} />
+        <Button onClickHandler={() =>  removeTodoList(todolistId)} title={"x"} />
       </div>
       <UniversalInput addItem={addTaskHandler} />
       <ul className={s.todolist__tasks_wrapper}>{tasksElements}</ul>
