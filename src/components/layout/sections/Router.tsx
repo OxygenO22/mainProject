@@ -15,6 +15,8 @@ import { S2eLesson3 } from '../../pages/s2eLesson3/S2eLesson3'
 import { MaterialUI } from '../../pages/materialUI/MaterialUI'
 import { ReducerTestsToDo } from '../../pages/reducerTests/ReducerTestsToDo'
 import { ReduxTKMain } from '../../pages/reduxTK/ReduxTKMain'
+import Sp3L2Todo from '../../pages/sprint3lesson2/Sp3L2Todo'
+import { ReduxMain } from '../../pages/sprint3lesson2/ReduxMain'
 
 export const Router = () => {
   return (
@@ -34,6 +36,7 @@ export const Router = () => {
           <Route path="/MaterialUI" element={<MaterialUI />} />
           <Route path="/ReducerTests" element={<ReducerTestsToDo />} />
           <Route path="/ReduxTK" element={<ReduxTKMain />} />
+          <Route path="/Sp3L2Todo" element={<ReduxMain />} />
           <Route element={<NotFound />} path="*" />
         </Route>
       </Routes>
