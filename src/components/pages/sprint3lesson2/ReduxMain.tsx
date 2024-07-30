@@ -5,8 +5,10 @@ import { store } from "./state/store";
 
 export const ReduxMain = () => {
   return (
-    <Provider store={store}>
-      <AppWithRedux />
-    </Provider>
+    <div >
+      <Provider store={store}>
+        <AppWithRedux />
+      </Provider>
+    </div>
   );
 };

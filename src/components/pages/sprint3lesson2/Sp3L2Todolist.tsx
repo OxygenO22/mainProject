@@ -43,7 +43,8 @@ export function Sp3L2Todolist(props: PropsType) {
     const onActiveClickHandler = () => props.changeFilter("active", props.id);
     const onCompletedClickHandler = () => props.changeFilter("completed", props.id);
 
-    return <div>
+    return (
+    <div>
         <h3> <EditableSpan value={props.title} onChange={changeTodolistTitle} />
             <IconButton onClick={removeTodolist}>
                 <Delete />
@@ -94,6 +95,7 @@ export function Sp3L2Todolist(props: PropsType) {
             </Button>
         </div>
     </div>
+    )
 }
 
 

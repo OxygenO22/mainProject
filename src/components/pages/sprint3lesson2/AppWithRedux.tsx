@@ -42,9 +42,10 @@ export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 
+export let todolistId1 = v1();
+export let todolistId2 = v1();
+
 function AppWithRedux() {
-  let todolistId1 = v1();
-  let todolistId2 = v1();
 
   let todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
 
@@ -53,12 +54,6 @@ function AppWithRedux() {
 
 
   const dispatch = useDispatch()
-
- 
-
-  
-
-  
 
   function removeTask(id: string, todolistId: string) {
     dispatch(removeTaskAC(id, todolistId));
@@ -94,7 +89,7 @@ function AppWithRedux() {
 
   return (
     <div className="App">
-      <AppBar position="static">
+      {/* <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <Menu />
@@ -102,7 +97,7 @@ function AppWithRedux() {
           <Typography variant="h6">News</Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Container fixed>
         <Grid container style={{ padding: "20px" }}>
           <AddItemForm addItem={addTodolist} />
@@ -125,7 +120,7 @@ function AppWithRedux() {
 
             return (
               <Grid key={tl.id} item>
-                <Paper style={{ padding: "10px" }}>
+                <Paper elevation={6} sx={{ padding: "10px" }}>
                   <Sp3L2Todolist
                     key={tl.id}
                     id={tl.id}
