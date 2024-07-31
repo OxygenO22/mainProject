@@ -13,4 +13,5 @@ export const MenuData = [
   {id: 12, path: '/ReducerTests', name: 'Reducer + Tests'},
   {id: 13, path: '/ReduxTK', name: 'ReduxTK'},
   {id: 14, path: '/Sp3L2Todo', name: 'Sp3L2Todo'},
+  {id: 15, path: '/Sp3L3Todo', name: 'Sp3L3Todo'},
 ];

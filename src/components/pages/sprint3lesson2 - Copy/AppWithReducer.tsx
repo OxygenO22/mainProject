@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+/* import React, { useReducer, useState } from "react";
 import "../../../App.css";
 import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
@@ -14,23 +14,8 @@ import {
 import IconButton from "@mui/material/IconButton/IconButton";
 import { Menu } from "@mui/icons-material";
 import { Sp3L2Todolist, TaskType } from "./Sp3L2Todolist";
-import {
-  addTodolistAC,
-  changeTodolistFilterAC,
-  changeTodolistTitleAC,
-  removeTodolistAC,
-  todolistsReducer,
-} from "./state/todolists-reducer";
-import {
-  addTaskAC,
-  changeTaskStatusAC,
-  changeTaskTitleAC,
-  removeTaskAC,
-  tasksReducer,
-} from "./state/tasks-reducer";
-import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "./state/store";
-import { todolistsSelector } from "./state/selectors";
+import { addTodolistAC, changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC, todolistsReducer } from "./state/todolists-reducer";
+import { addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer } from "./state/tasks-reducer";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -43,60 +28,74 @@ export type TasksStateType = {
   [key: string]: Array<TaskType>;
 };
 
-export let todolistId1 = v1();
-export let todolistId2 = v1();
+function AppWithReducer() {
+  let todolistId1 = v1();
+  let todolistId2 = v1();
 
-function AppWithRedux() {
+  const initTodolists = (): Array<TodolistType> => {
+    return [
+    { id: todolistId1, title: "What to learn", filter: "all" },
+    { id: todolistId2, title: "What to buy", filter: "all" },
+  ]};
 
-  /* let todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
-
-
-  let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks) */
-
-  let todolists = useSelector(todolistsSelector);
-
-  let tasks = useSelector<AppRootStateType, TasksStateType>(
-    (state) => state.tasks
+  let [todolists, dispatchToTodolists] = useReducer(
+    todolistsReducer,
+    null,
+    initTodolists
   );
 
-
-  const dispatch = useDispatch()
+  let [tasks, dispatchToTasks] = useReducer(tasksReducer, {
+    [todolistId1]: [
+      { id: v1(), title: "HTML&CSS", isDone: true },
+      { id: v1(), title: "JS", isDone: true },
+    ],
+    [todolistId2]: [
+      { id: v1(), title: "Milk", isDone: true },
+      { id: v1(), title: "React Book", isDone: true },
+    ],
+  });
 
   function removeTask(id: string, todolistId: string) {
-    dispatch(removeTaskAC(id, todolistId));
+    dispatchToTasks(removeTaskAC(id, todolistId));
   }
 
   function addTask(title: string, todolistId: string) {
-    dispatch(addTaskAC(title, todolistId));
+    dispatchToTasks(addTaskAC(title, todolistId));
   }
 
   function changeStatus(id: string, isDone: boolean, todolistId: string) {
-    dispatch(changeTaskStatusAC(id, isDone, todolistId));
+    dispatchToTasks(changeTaskStatusAC(id, isDone, todolistId));
   }
 
   function changeTaskTitle(id: string, newTitle: string, todolistId: string) {
-    dispatch(changeTaskTitleAC(id, newTitle, todolistId));
+    dispatchToTasks(changeTaskTitleAC(id, newTitle, todolistId))
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    dispatch(changeTodolistFilterAC(todolistId, value));
+    dispatchToTodolists(changeTodolistFilterAC(todolistId, value));
   }
 
   function removeTodolist(id: string) {
-    dispatch(removeTodolistAC(id));
+    let action = removeTodolistAC(id);
+    dispatchToTodolists(action);
+    dispatchToTasks(action);
   }
 
   function changeTodolistTitle(id: string, title: string) {
-    dispatch(changeTodolistTitleAC(id, title));
+    dispatchToTodolists(changeTodolistTitleAC(id, title));
   }
 
   function addTodolist(title: string) {
-    dispatch(addTodolistAC(title));
+    let action = addTodolistAC(title);
+    dispatchToTodolists(action);
+    dispatchToTasks(action);
   }
+
+  
 
   return (
     <div className="App">
-      {/* <AppBar position="static">
+      <AppBar position="static">
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu">
             <Menu />
@@ -104,7 +103,7 @@ function AppWithRedux() {
           <Typography variant="h6">News</Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>
-      </AppBar> */}
+      </AppBar>
       <Container fixed>
         <Grid container style={{ padding: "20px" }}>
           <AddItemForm addItem={addTodolist} />
@@ -127,7 +126,7 @@ function AppWithRedux() {
 
             return (
               <Grid key={tl.id} item>
-                <Paper elevation={6} sx={{ padding: "10px" }}>
+                <Paper style={{ padding: "10px" }}>
                   <Sp3L2Todolist
                     key={tl.id}
                     id={tl.id}
@@ -152,4 +151,5 @@ function AppWithRedux() {
   );
 }
 
-export default AppWithRedux;
+export default AppWithReducer;
+ */
