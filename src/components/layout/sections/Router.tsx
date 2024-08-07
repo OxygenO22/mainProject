@@ -18,6 +18,7 @@ import { ReduxTKMain } from '../../pages/reduxTK/ReduxTKMain'
 import Sp3L2Todo from '../../pages/sprint3lesson2/Sp3L2Todo'
 import { ReduxMain } from '../../pages/sprint3lesson2/ReduxMain'
 import { ReduxMainLesson3 } from '../../pages/sprint3lesson2 - Copy/ReduxMainLesson3'
+import { Sp3Le4MainStoryBook } from '../../pages/sprint3Extralesson4/Sp3Le4MainStoryBook'
 
 export const Router = () => {
   return (
@@ -39,7 +40,8 @@ export const Router = () => {
           <Route path="/ReduxTK" element={<ReduxTKMain />} />
           <Route path="/Sp3L2Todo" element={<ReduxMain />} />
           <Route path="/Sp3L3Todo" element={<ReduxMainLesson3 />} />
-          <Route element={<NotFound />} path="*" />
+          <Route path="/Sp3Le4StoryBook" element={<Sp3Le4MainStoryBook />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
