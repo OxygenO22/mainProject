@@ -19,6 +19,7 @@ import Sp3L2Todo from '../../pages/sprint3lesson2/Sp3L2Todo'
 import { ReduxMain } from '../../pages/sprint3lesson2/ReduxMain'
 import { ReduxMainLesson3 } from '../../pages/sprint3lesson2 - Copy/ReduxMainLesson3'
 import { Sp3Le4MainStoryBook } from '../../pages/sprint3Extralesson4/Sp3Le4MainStoryBook'
+import { MainAPI } from '../../pages/sprint4lesson1API/MainAPI'
 
 export const Router = () => {
   return (
@@ -41,6 +42,7 @@ export const Router = () => {
           <Route path="/Sp3L2Todo" element={<ReduxMain />} />
           <Route path="/Sp3L3Todo" element={<ReduxMainLesson3 />} />
           <Route path="/Sp3Le4StoryBook" element={<Sp3Le4MainStoryBook />} />
+          <Route path="/API" element={<MainAPI />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

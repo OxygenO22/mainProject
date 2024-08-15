@@ -15,4 +15,5 @@ export const MenuData = [
   {id: 14, path: '/Sp3L2Todo', name: 'Sp3L2Todo'},
   {id: 15, path: '/Sp3L3Todo', name: 'Sp3L3Todo'},
   {id: 16, path: '/Sp3Le4StoryBook', name: 'Sp3Le4StoryBook'},
+  {id: 17, path: '/API', name: 'API'},
 ];
