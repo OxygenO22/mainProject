@@ -32,7 +32,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
 import { todolistsSelector } from "./state/selectors";
 import axios, { AxiosRequestConfig } from "axios";
-import { todolistApi } from "./api/todolist-api";
+import { todolistApi, TodolistTypeAPI } from "./api/todolist-api";
+import { tasksApi, TasksTypeAPI } from "./api/tasks-api";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -53,19 +54,17 @@ export let todolistId2 = v1();
 export const TodoAPI = () => {
 
   const [todoApi, setTodoApi] = useState('')
-  const [todos, setTodos] = useState(null)
-
-  console.log("todos: ", todos);
+  const [todos, setTodos] = useState<TodolistTypeAPI[]>([]);
+  //const [tasks, setTasks] = useState<TasksTypeAPI>();
 
   
 
   
 
   useEffect(() => {
-    todolistApi.getTodoLists().then((data) => console.log(data.data));
+    todolistApi.getTodoLists().then((data) => setTodos(data.data));
   }, []);
 
-  
    const getTL = () => {
      todolistApi.getTodoLists().then((data) => console.log(data.data));
    };
@@ -88,6 +87,12 @@ export const TodoAPI = () => {
     const title = todoApi;
      todolistApi.updateTodo(todoId, title);
    };
+
+
+   useEffect(() => {
+     const todoId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+     tasksApi.getTasks(todoId).then((data) => console.log(data.data.items));
+   }, []);
 
 
    /* export const GetTodolists = () => {
@@ -257,7 +262,14 @@ export const TodoAPI = () => {
             <button onClick={updateTL}>UpdateTL</button>
           </div>
           <div>
-            {}
+            {todos.map((data) => (
+              <Grid key={data.addedDate} sx={{ marginBottom: "10px" }}>
+                <Paper elevation={6} sx={{ padding: "10px" }}>
+                  <h2>{data.title}</h2>
+                  <p>{data.id}</p>
+                </Paper>
+              </Grid>
+            ))}
           </div>
         </div>
       </Container>
