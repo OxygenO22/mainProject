@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import "../../../App.css";
 import { v1 } from "uuid";
 import { AddItemForm } from "./AddItemForm";
@@ -31,6 +31,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { AppRootStateType } from "./state/store";
 import { todolistsSelector } from "./state/selectors";
+import axios, { AxiosRequestConfig } from "axios";
+import { todolistApi } from "./api/todolist-api";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -46,7 +48,91 @@ export type TasksStateType = {
 export let todolistId1 = v1();
 export let todolistId2 = v1();
 
+
+
 export const TodoAPI = () => {
+
+  const [todoApi, setTodoApi] = useState('')
+  const [todos, setTodos] = useState(null)
+
+  console.log("todos: ", todos);
+
+  
+
+  
+
+  useEffect(() => {
+    todolistApi.getTodoLists().then((data) => console.log(data.data));
+  }, []);
+
+  
+   const getTL = () => {
+     todolistApi.getTodoLists().then((data) => console.log(data.data));
+   };
+
+   const addTL = () => {
+    const title = todoApi;
+
+     todolistApi
+       .createTodo(title)
+       .then((data) => console.log("data: ", data.data));
+   };
+
+   const deleteTL = () => {
+    const todoId = "e0a4ba89-9ab5-46fb-80c0-dad4a5afc8c0";
+     todolistApi.deleteTodo(todoId);
+   };
+
+   const updateTL = () => {
+    const todoId = "e0a4ba89-9ab5-46fb-80c0-dad4a5afc8c0";
+    const title = todoApi;
+     todolistApi.updateTodo(todoId, title);
+   };
+
+
+   /* export const GetTodolists = () => {
+     const [state, setState] = useState<any>(null);
+     useEffect(() => {
+       axios
+         .get("https://social-network.samuraijs.com/api/1.1/todo-lists")
+         .then((data) => console.log("data: ", data));
+
+       // здесь мы будем делать запрос и ответ закидывать в стейт.
+       // который в виде строки будем отображать в div-ке
+     }, []);
+     return <div>{JSON.stringify(state)}</div>;
+   };
+
+   export const CreateTodolist = () => {
+     const [state, setState] = useState<any>(null);
+     useEffect(() => {}, []);
+
+     return <div>{JSON.stringify(state)}</div>;
+   };
+
+   export const DeleteTodolist = () => {
+     const [state, setState] = useState<any>(null);
+     useEffect(() => {}, []);
+
+     return <div>{JSON.stringify(state)}</div>;
+   };
+
+   export const UpdateTodolistTitle = () => {
+     const [state, setState] = useState<any>(null);
+     useEffect(() => {}, []);
+
+     return <div>{JSON.stringify(state)}</div>;
+   }; */
+
+
+
+
+
+
+
+
+
+
   /* let todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
 
 
@@ -155,6 +241,25 @@ export const TodoAPI = () => {
             );
           })}
         </Grid>
+        <div>
+          <div>
+            <p>{todoApi}</p>
+            <input
+              type="text"
+              value={todoApi}
+              onChange={(e) => setTodoApi(e.target.value)}
+            />
+          </div>
+          <div>
+            <button onClick={getTL}>GetTL</button>
+            <button onClick={addTL}>AddTL</button>
+            <button onClick={deleteTL}>DeleteTL</button>
+            <button onClick={updateTL}>UpdateTL</button>
+          </div>
+          <div>
+            {}
+          </div>
+        </div>
       </Container>
     </div>
   );

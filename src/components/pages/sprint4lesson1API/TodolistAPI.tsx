@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useCallback, useMemo} from 'react';
+import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from "@mui/material/IconButton/IconButton";
@@ -8,6 +8,7 @@ import { MemoButton } from './MemoButton';
 import { Task } from './Task';
 import { TaskWithRedux } from './TaskWithRedux';
 import { FilterValuesType } from './TodoAPI';
+import axios from 'axios';
 
 
 export type TaskType = {
@@ -15,6 +16,8 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
+
+
 
 type PropsType = {
     id: string
@@ -31,6 +34,22 @@ type PropsType = {
 }
 
 export const TodolistAPI = (props: PropsType) => {
+
+  
+      
+    
+
+
+
+
+  
+
+
+
+
+
+
+
   const addTask = useCallback(
     (title: string) => {
       props.addTask(title, props.id);
@@ -127,6 +146,7 @@ export const TodolistAPI = (props: PropsType) => {
           Completed
         </MemoButton>
       </div>
+      
     </div>
   );
 };
