@@ -9,6 +9,8 @@ import { Task } from './Task';
 import { TaskWithRedux } from './TaskWithRedux';
 import { FilterValuesType } from './TodoAPI';
 import axios from 'axios';
+import { useAppDispatch } from './state/store';
+import { getTasksTC } from './state/tasks-reducer';
 
 
 export type TaskType = {
@@ -35,20 +37,11 @@ type PropsType = {
 
 export const TodolistAPI = (props: PropsType) => {
 
-  
-      
-    
-
-
-
-
-  
-
-
-
-
-
-
+  const dispatch = useAppDispatch()
+  // Для работы через редакс Thunk
+  useEffect(() => {
+    dispatch(getTasksTC(props.id));
+  }, []);
 
   const addTask = useCallback(
     (title: string) => {
@@ -146,7 +139,6 @@ export const TodolistAPI = (props: PropsType) => {
           Completed
         </MemoButton>
       </div>
-      
     </div>
   );
 };

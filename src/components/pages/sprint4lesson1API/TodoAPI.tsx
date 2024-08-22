@@ -18,7 +18,9 @@ import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
+  getTodosTC,
   removeTodolistAC,
+  setTodoListsAC,
   todolistsReducer,
 } from "./state/todolists-reducer";
 import {
@@ -29,11 +31,11 @@ import {
   tasksReducer,
 } from "./state/tasks-reducer";
 import { useDispatch, useSelector } from "react-redux";
-import { AppRootStateType } from "./state/store";
+import { AppRootStateType, useAppDispatch } from "./state/store";
 import { todolistsSelector } from "./state/selectors";
 import axios, { AxiosRequestConfig } from "axios";
 import { todolistApi, TodolistTypeAPI } from "./api/todolist-api";
-import { tasksApi, TasksTypeAPI } from "./api/tasks-api";
+import { ResponseTypeAPI, tasksApi, TasksTypeItemsAPI } from "./api/tasks-api";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -54,16 +56,25 @@ export let todolistId2 = v1();
 export const TodoAPI = () => {
 
   const [todoApi, setTodoApi] = useState('')
-  const [todos, setTodos] = useState<TodolistTypeAPI[]>([]);
-  //const [tasks, setTasks] = useState<TasksTypeAPI>();
-
+  const [todosAPI, setTodosAPI] = useState<TodolistTypeAPI[]>([]);
+  const [tasksAPI, setTasksAPI] = useState<ResponseTypeAPI>();
+  const dispatch = useAppDispatch();
   
 
-  
+  /* useEffect(() => {
+    todolistApi.getTodoLists().then((data) => setTodosAPI(data.data));
+  }, []); */
 
+  /* useEffect(() => {
+    todolistApi.getTodoLists().then((data) => dispatch(setTodoListsAC(data.data)));
+  }, []); */
+
+  // Для работы через редакс Thunk
   useEffect(() => {
-    todolistApi.getTodoLists().then((data) => setTodos(data.data));
+    dispatch(getTodosTC());
   }, []);
+
+
 
    const getTL = () => {
      todolistApi.getTodoLists().then((data) => console.log(data.data));
@@ -88,11 +99,41 @@ export const TodoAPI = () => {
      todolistApi.updateTodo(todoId, title);
    };
 
+   
+
 
    useEffect(() => {
+      const todoId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+      tasksApi.getTasks(todoId).then((data) => console.log(data.data.items));
+   }, [todosAPI]);
+
+   const getTasks = () => {
      const todoId = "85774521-9c94-405f-aa08-8e0f7d676eed";
      tasksApi.getTasks(todoId).then((data) => console.log(data.data.items));
-   }, []);
+   };
+
+   const addTasks = () => {
+     const title = "Hey";
+      const todoId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+     tasksApi
+       .createTasks(todoId, title)
+       .then((data) => console.log("data: ", data.data));
+   };
+
+   const deleteTasks = () => {
+     const todoId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+     const taskId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+     tasksApi.deleteTasks(todoId, taskId);
+   };
+
+   const updateTasks = () => {
+     const todoId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+     const taskId = "85774521-9c94-405f-aa08-8e0f7d676eed";
+     const title = "Hey";
+     tasksApi.updateTasks(todoId, taskId, title);
+   };
+
+   
 
 
    /* export const GetTodolists = () => {
@@ -129,27 +170,19 @@ export const TodoAPI = () => {
      return <div>{JSON.stringify(state)}</div>;
    }; */
 
-
-
-
-
-
-
-
-
-
   /* let todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
 
 
   let tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks) */
 
   let todolists = useSelector(todolistsSelector);
+  console.log(todolists);
 
   let tasks = useSelector<AppRootStateType, TasksStateType>(
     (state) => state.tasks
   );
 
-  const dispatch = useDispatch();
+  
 
   const removeTask = useCallback(
     (id: string, todolistId: string) => {
@@ -262,14 +295,10 @@ export const TodoAPI = () => {
             <button onClick={updateTL}>UpdateTL</button>
           </div>
           <div>
-            {todos.map((data) => (
-              <Grid key={data.addedDate} sx={{ marginBottom: "10px" }}>
-                <Paper elevation={6} sx={{ padding: "10px" }}>
-                  <h2>{data.title}</h2>
-                  <p>{data.id}</p>
-                </Paper>
-              </Grid>
-            ))}
+            <button onClick={getTasks}>GetTasks</button>
+            <button onClick={addTasks}>AddTasks</button>
+            <button onClick={deleteTasks}>DeleteTasks</button>
+            <button onClick={updateTasks}>UpdateTasks</button>
           </div>
         </div>
       </Container>

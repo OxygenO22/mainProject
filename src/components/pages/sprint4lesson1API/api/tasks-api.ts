@@ -10,24 +10,20 @@ import axios, { AxiosInstance } from "axios";
 
   export const tasksApi = {
     getTasks(todoId: string) {
-        return instance.get<TasksTypeAPI>(`/todo-lists/${todoId}/tasks`)
+        return instance.get<ResponseTypeAPI>(`/todo-lists/${todoId}/tasks`)
     },
     createTasks(todoId: string, title: string) {
-        return instance.post<ResponseTypeAPI<{item: TasksTypeAPI}>>(`/todo-lists/${todoId}/tasks`, {title})
+        return instance.post<ResponseTypeAPI<{items: TasksTypeItemsAPI}>>(`/todo-lists/${todoId}/tasks`, {title})
     },
     deleteTasks(todoId: string, taskId: string) {
         return instance.delete<ResponseTypeAPI>(`/todo-lists/${todoId}/tasks/${taskId}`)
     },
     updateTasks(todoId: string, taskId: string, title: string) {
-        return instance.put<ResponseTypeAPI>(`/todo-lists/${todoId}/tasks/${taskId}`, {title})
+        return instance.put<UpdateTasksTypeAPI>(`/todo-lists/${todoId}/tasks/${taskId}`, {title})
     },
 };
 
-export type TasksTypeAPI = {
-  items: TasksTypeItemsAPI[]
-}
-
-type TasksTypeItemsAPI = {
+export type TasksTypeItemsAPI = {
   addedDate: string
   deadline: string
   description: string
@@ -40,9 +36,17 @@ type TasksTypeItemsAPI = {
   todoListId: string
 }
 
-type ResponseTypeAPI<T = {}> = {
-    data: T
-    fieldsErrors: string[]
-    messages: string[],
-    resultCode: number,
+export type UpdateTasksTypeAPI = {
+  deadline: string
+  description: string
+  priority: number
+  startDate: string
+  status: number
+  title: string
+}
+
+export type ResponseTypeAPI<T = {}> = {
+    items: T
+    error: string | null
+    totalCoint: number
 }
