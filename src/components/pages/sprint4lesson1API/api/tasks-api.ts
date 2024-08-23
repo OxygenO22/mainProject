@@ -13,7 +13,7 @@ import axios, { AxiosInstance } from "axios";
         return instance.get<ResponseTypeAPI>(`/todo-lists/${todoId}/tasks`)
     },
     createTasks(todoId: string, title: string) {
-        return instance.post<ResponseTypeAPI<{items: TasksTypeItemsAPI}>>(`/todo-lists/${todoId}/tasks`, {title})
+        return instance.post<ResponseTypeAPI<{items: TasksTypeAPI}>>(`/todo-lists/${todoId}/tasks`, {title})
     },
     deleteTasks(todoId: string, taskId: string) {
         return instance.delete<ResponseTypeAPI>(`/todo-lists/${todoId}/tasks/${taskId}`)
@@ -23,7 +23,7 @@ import axios, { AxiosInstance } from "axios";
     },
 };
 
-export type TasksTypeItemsAPI = {
+export type TasksTypeAPI = {
   addedDate: string
   deadline: string
   description: string

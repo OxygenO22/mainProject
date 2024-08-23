@@ -3,51 +3,22 @@ import {v1} from 'uuid';
 import {AddTodolistActionType, RemoveTodolistActionType, SetTodoListsType} from './todolists-reducer';
 import { TaskStateType } from '../../../../types/common';
 import { Dispatch } from 'redux';
-import { ResponseTypeAPI, tasksApi, TasksTypeItemsAPI } from '../api/tasks-api';
-import { TaskType } from '../TodolistAPI';
+import {  tasksApi } from '../api/tasks-api';
 
-export type RemoveTaskActionType = { 
-    type: 'REMOVE-TASK'
-    todolistId: string
-    taskId: string
-}
-export type AddTaskActionType = {
-    type: 'ADD-TASK'
-    title: string
-    todolistId: string
-}
-export type ChangeTaskStatusActionType = {
-    type: 'CHANGE-TASK-STATUS'
-    taskId: string
-    todolistId: string
-    isDone: boolean
-}
-export type ChangeTaskTitleActionType = {
-    type: 'CHANGE-TASK-TITLE'
-    taskId: string
-    todolistId: string
-    title: string
-}
+export type RemoveTaskActionType = ReturnType<typeof removeTaskAC>;
+
+export type AddTaskActionType = ReturnType<typeof addTaskAC>;
+
+export type ChangeTaskStatusActionType = ReturnType<typeof changeTaskStatusAC>;
+
+export type ChangeTaskTitleActionType = ReturnType<typeof changeTaskTitleAC>;
 
 type ActionsType = RemoveTaskActionType | AddTaskActionType
  | ChangeTaskStatusActionType | ChangeTaskTitleActionType
     | AddTodolistActionType | RemoveTodolistActionType | SetTodoListsType | ReturnType<typeof setTasksAC>;
 
 
-const initialState: TaskStateType = {
-        /* [todoListId_1]: [
-          { id: v1(), title: "HTML", isDone: true },
-          { id: v1(), title: "CSS", isDone: true },
-          { id: v1(), title: "JS/TS", isDone: false },
-          { id: v1(), title: "REACT", isDone: false },
-        ],
-
-        [todoListId_2]: [
-          { id: v1(), title: "Beer", isDone: true },
-          { id: v1(), title: "Chips", isDone: true },
-          { id: v1(), title: "Dried fish", isDone: false },
-          { id: v1(), title: "Nuts", isDone: false },
-        ] */}
+const initialState: TaskStateType = {}
 
 export const tasksReducer = (state = initialState, action: ActionsType): TaskStateType => {
     switch (action.type) {
@@ -124,28 +95,29 @@ export const tasksReducer = (state = initialState, action: ActionsType): TaskSta
     }
 }
 
-export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => {
-    return { type: 'REMOVE-TASK', todolistId, taskId }
+export const removeTaskAC = (taskId: string, todolistId: string) => {
+    return { type: 'REMOVE-TASK', todolistId, taskId } as const
 }
-export const addTaskAC = (title: string, todolistId: string): AddTaskActionType => {
-    return { type: 'ADD-TASK', title, todolistId}
+export const addTaskAC = (title: string, todolistId: string) => {
+    return { type: 'ADD-TASK', title, todolistId} as const
 }
 export const changeTaskStatusAC = (taskId: string,
                                    isDone: boolean,
-                                   todolistId: string): ChangeTaskStatusActionType => {
-    return { type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId}
+                                   todolistId: string) => {
+    return { type: 'CHANGE-TASK-STATUS', isDone, todolistId, taskId} as const
 }
 export const changeTaskTitleAC = (taskId: string,
                                    title: string,
-                                   todolistId: string): ChangeTaskTitleActionType => {
-    return { type: 'CHANGE-TASK-TITLE', title, todolistId, taskId}
+                                   todolistId: string) => {
+    return { type: 'CHANGE-TASK-TITLE', title, todolistId, taskId} as const
 }
 
 
 
-
+// Action Creator Для запроса на бек
 const setTasksAC = (todoId: string, tasks: any) => ({type: 'SET-TASKS', tasks, todoId} as const)
 
+// Thunk Creator - можно передавать пропсы
 export const getTasksTC = (todoId: string) => (dispatch: Dispatch) => {
     tasksApi.getTasks(todoId)
         .then((res) => dispatch(setTasksAC(todoId, res.data.items)))

@@ -1,14 +1,11 @@
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {AddItemForm} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from "@mui/material/IconButton/IconButton";
 import {Delete} from "@mui/icons-material";
-import {Button, Checkbox} from "@mui/material";
 import { MemoButton } from './MemoButton';
-import { Task } from './Task';
 import { TaskWithRedux } from './TaskWithRedux';
 import { FilterValuesType } from './TodoAPI';
-import axios from 'axios';
 import { useAppDispatch } from './state/store';
 import { getTasksTC } from './state/tasks-reducer';
 
@@ -18,8 +15,6 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-
-
 
 type PropsType = {
     id: string
@@ -98,19 +93,6 @@ export const TodolistAPI = (props: PropsType) => {
       <AddItemForm addItem={addTask} />
       <div>
         {
-          /* tasks.map(t => {
-                    return (
-                      <Task
-                        key={t.id}
-                        task={t}
-                        todolistId={props.id}
-                        removeTask={props.removeTask}
-                        changeTaskStatus={props.changeTaskStatus}
-                        changeTaskTitle={props.changeTaskTitle}
-                      />
-                    )
-                }) */
-
           tasks.map((t) => {
             return <TaskWithRedux key={t.id} task={t} todolistId={props.id} />;
           })

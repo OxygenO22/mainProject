@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import {tasksReducer} from './tasks-reducer';
 import {todolistsReducer} from './todolists-reducer';
-import {AnyAction, applyMiddleware, combineReducers, legacy_createStore, UnknownAction} from 'redux';
+import { applyMiddleware, combineReducers, legacy_createStore, UnknownAction} from 'redux';
 import { ThunkDispatch, thunk } from 'redux-thunk'
 
 // объединяя reducer-ы с помощью combineReducers,
